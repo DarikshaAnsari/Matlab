@@ -1,0 +1,74 @@
+Euler Method
+dndt = @(K,N) -K*N;
+K=0.015;
+N0=1;
+tspan = [1,300]; 
+h=10;
+t_values = tspan(1):h:tspan(2);
+N_values = zeros(size(t_values));
+N_values(1) = N0;
+for i = 1:length(t_values) - 1
+    N_values(i + 1) = N_values(i) + h * dndt(K, N_values(i));
+end
+
+figure;
+plot(t_values, N_values, '-o', 'LineWidth', 2);
+title('Decay dy/dt = -K*T');
+xlabel('t');
+ylabel('y(t)');
+grid on;
+
+% Ode45
+% % Define the differential equation
+% dndt = @(t, N) -K * N;
+% 
+% % Parameters
+% K = 0.015;   % Decay constant
+% N0 = 1;      % Initial number of nuclei
+% tspan = [1, 300];  % Time span
+% 
+% % Solve the differential equation using ode45
+% [t, N] = ode45(dndt, tspan, N0);
+% 
+% % Plot the solution
+% figure;
+% plot(t, N, '-o', 'LineWidth', 2);
+% title('Decay dy/dt = -K*T');
+% xlabel('Time');
+% ylabel('Nuclei');
+% grid on;
+
+% %Runge katta method
+% % Define the differential equation
+% dndt = @(t, N) -K * N;
+% 
+% % Parameters
+% K = 0.015;   % Decay constant
+% N0 = 1;      % Initial number of nuclei
+% tspan = [1, 300];  % Time span
+% h = 10;      % Time step
+% 
+% % Initialize arrays to store time and number of nuclei values
+% t_values = tspan(1):h:tspan(2);
+% N_values = zeros(size(t_values));
+% N_values(1) = N0;
+% 
+% % Implement the RK4 method
+% for i = 1:length(t_values) - 1
+%     t = t_values(i);
+%     N = N_values(i);
+%     k1 = dndt(t, N);
+%     k2 = dndt(t + h/2, N + h/2 * k1);
+%     k3 = dndt(t + h/2, N + h/2 * k2);
+%     k4 = dndt(t + h, N + h * k3);
+%     N_values(i + 1) = N + h/6 * (k1 + 2*k2 + 2*k3 + k4);
+% end
+% 
+% % Plot the solution
+% figure;
+% plot(t_values, N_values, '-o', 'LineWidth', 2);
+% title('Decay dy/dt = -K*T (Runge-Kutta Method)');
+% xlabel('Time');
+% ylabel('Nuclei');
+% grid on;
+% 
